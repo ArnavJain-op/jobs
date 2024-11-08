@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <link rel="stylesheet" href="{{ url_for('static' , filename = 'css/styles.css') }}">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+                                                                                                                                                                                                                                                                                                                                        
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .filter-form label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .filter-form select,
+        .filter-form input[type="text"] {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .filter-form button {
+            padding: 10px;
+            background-color: #0073e6;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .filter-form button:hover {
+            background-color: #005bb5;
+        }
+
+        .job-results {
+            margin-top: 30px;
+        }
+
+        /* Job Card Styling */
+        .job-card {
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .job-location,
+        .job-category {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Scroll Down Message Styling */
+        .scroll-down-message {
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+            background-color: #ff9800;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .scroll-down-message:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul class="nav__links nav__left">
+          <li><a href="{{ url_for('index') }}" class="logo">JobScout</a></li>
+          <li><a href="{{ url_for('pre') }}">Our Suggestions</a></li>
+          <li><a href="{{ url_for('dreams') }}">Your Dreams</a></li>
+          
+        </ul>    </nav> 
+
+<div class="container">
+    <h1>Job Search</h1>
+
+    <form id="jobFilterForm" class="filter-form">
+        <label for="search">Job Title</label>
+        <input type="text" id="search" name="search" placeholder="e.g., Software Engineer">
+
+        <label for="location">Location</label>
+        <select id="location" name="location">
+            <option value="">Any</option>
+            <option value="mumbai">Berlin</option>
+            <option value="gurgaon">Munich</option>
+            <option value="sunnyvale">Dortmund</option>
+            <option value="sunnyvale">Bonn</option>
+            <option value="sunnyvale">Stuttgart</option>
+            <option value="sunnyvale">Frankfurt</option>
+            <!-- Add more locations as needed -->
+        </select>
+
+        <label for="category">Category</label>
+        <select id="category" name="category">
+            <option value="">Any</option>
+            <option value="engineering">Engineering</option>
+            <option value="marketing">Marketing</option>
+            <option value="sales">Sales</option>
+            <!-- Add more categories as needed -->
+        </select>
+
+        <!-- Additional dropdowns for other filters can be added as needed -->
+        <label for="experience">Experience</label>
+        <select id="experience" name="experience">
+            <option value="">Any</option>
+            <option value="entry">Entry Level</option>
+            <option value="mid">Mid Level</option>
+            <option value="senior">Senior Level</option>
+        </select>
+
+        <label for="degree">Degree</label>
+        <select id="degree" name="degree">
+            <option value="">Any</option>
+            <option value="bachelors">Bachelor's</option>
+            <option value="masters">Master's</option>
+            <option value="phd">PhD</option>
+        </select>
+
+        <label for="job_type">Job Types</label>
+        <select id="job_type" name="job_type">
+            <option value="">Any</option>
+            <option value="full-time">Full-Time</option>
+            <option value="part-time">Part-Time</option>
+            <option value="contract">Contract</option>
+        </select>
+
+        <label for="salary">Salary</label>
+        <select id="salary" name="salary">
+            <option value="">Any</option>
+            <option value="30k-50k">30k - 50k</option>
+            <option value="50k-70k">50k - 70k</option>
+            <option value="70k+">70k+</option>
+        </select>
+
+        <label for="sort_by">Sort By</label>
+        <select id="sort_by" name="sort_by">
+            <option value="relevance">Relevance</option>
+            <option value="date">Date Posted</option>
+            <option value="salary">Salary</option>
+        </select>
+
+        <button type="submit">Search Jobs</button>
+    </form>
+
+    <div class="scroll-down-message">Scroll Down For Results After Searching</div>
+
+    <div class="job-results" id="jobResults"></div>
+</div>
+
+<script>
+    document.getElementById("jobFilterForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const search = document.getElementById("search").value;
+        const location = document.getElementById("location").value;
+        const category = document.getElementById("category").value;
+
+        const url = new URL("/jobs", window.location.origin);
+        url.searchParams.append("search", search);
+        url.searchParams.append("location", location);
+        url.searchParams.append("category", category);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const jobResults = document.getElementById("jobResults");
+                jobResults.innerHTML = "";
+
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(job => {
+                        const jobItem = document.createElement("div");
+                        jobItem.classList.add("job-card");
+
+                        jobItem.innerHTML = `
+                            <div class="job-title">${job.title}</div>
+                            <div class="job-location"><strong>Location:</strong> ${job.location || "N/A"}</div>
+                            <div class="job-category"><strong>Category:</strong> ${job.category || "N/A"}</div>
+                        `;
+
+                        jobResults.appendChild(jobItem);
+                    });
+                } else {
+                    jobResults.innerHTML = "<p>No jobs found.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching jobs:", error);
+            });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static' , filename = 'css/styles.css') }}" />
+    <title>Home | JobScout</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <ul class="nav__links nav__left">
+          <li><a href="{{ url_for('index') }}" class="logo">JobScout</a></li>
+          <li><a href="{{ url_for('pre') }}">Our Suggestions</a></li>
+          <li><a href="{{ url_for('dreams') }}">Your Dreams</a></li>
+          
+        </ul>
+ 
+      </nav>
+      <span class="letter-s">S</span>
+      <img src="{{ url_for('static' , filename = 'assets/bag.png') }}" alt="header" width="200" height="200">
+
+      <h4 class="text__left">JOB</h4>
+      <h4 class="text__right">SCOUT</h4>
+      <button onclick="window.location.href='{{ url_for('dreams') }}'" class="btn explore">EXPLORE MORE</button>
+
+      <div class="btn print">PAYING</div>
+      <div class="btn catalog">QUALIFICATIONS</div>
+      <h5 class="feature-1">Offline</h5>
+      <h5 class="feature-2">Online</h5>
+      <h5 class="feature-3">Hybrid</h5>
+      <h5 class="feature-4">Flexible</h5>
+      <footer class="footer">
+        <p>Copyright © 2024 JobScout. All rights reserved.</p>
+        <div class="footer__links">
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter</a></li>
+        </div>
+      </footer>
+    </div>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="{{ url_for('static' , filename = 'js/main.js') }}"></script>
+  </body>
+</html>
